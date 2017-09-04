@@ -1,0 +1,27 @@
+---
+- name: install nodenv
+  git:
+    repo: https://github.com/nodenv/nodenv
+    dest: "{{ node_user_home }}/.nodenv"
+    update: false
+  become: true
+  become_user: "{{ node_user }}"
+  become_flags: -Hi
+
+- name: install node-build
+  git:
+    repo: https://github.com/nodenv/node-build.git
+    dest: "{{ node_user_home }}/.nodenv/plugins/node-build"
+    update: false
+  become: true
+  become_user: "{{ node_user }}"
+  become_flags: -Hi
+
+- name: install profile script
+  template:
+    src: nodenv.sh.j2
+    dest: /etc/profile.d/nodenv.sh
+    owner: root
+    group: root
+    mode: "0755"
+  become: true

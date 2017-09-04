@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  name: node-dev
+  version: 'v1.0.0'
+  author: Naftuli Kay
+  description: Install and configure a NodeJS development environment on a system.
+
+  license: MIT
+
+  min_ansible_version: 2.2
+
+  platforms:
+    - name: EL
+      versions: [7]
+    - name: Ubuntu
+      versions: [trusty, xenial]
+
+  galaxy_tags: [node, nodejs, javascript]

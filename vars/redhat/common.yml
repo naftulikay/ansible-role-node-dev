@@ -1,0 +1,11 @@
+---
+node_build_packages:
+  - gcc
+  - bzip2
+  - openssl-devel
+  - libyaml-devel
+  - libffi-devel
+  - readline-devel
+  - zlib-devel
+  - gdbm-devel
+  - ncurses-devel

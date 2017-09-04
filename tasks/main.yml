@@ -1,0 +1,39 @@
+---
+- name: fail when node user is not defined
+  fail: msg="The node_user variable must be set."
+  when: (node_user is not defined) or (not node_user)
+
+# set facts to reliably determine os
+- name: discover operating system
+  include: discover/os.yml
+
+# set facts to reliably determine node variables
+- name: discover node
+  include: discover/node.yml
+
+# load per-os and per distro variables
+- name: load variables
+  include_vars: "{{ var_loop_item }}"
+  with_items:
+    - "{{ os_name }}/common.yml"
+    - "{{ os_name }}/{{ os_release }}.yml"
+  loop_control: { loop_var: var_loop_item }
+
+# refresh cache on ubuntu
+- name: refresh apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  when: os_name == "ubuntu"
+  become: true
+
+# install build dependencies
+- name: install git
+  package: name=git state=present
+  become: true
+
+# install nodenv
+- name: install nodenv
+  include: nodenv.yml
+
+# install node
+- name: install node
+  include: node.yml

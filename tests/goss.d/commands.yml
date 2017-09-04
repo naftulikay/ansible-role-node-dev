@@ -1,0 +1,7 @@
+---
+command:
+  # executing nodenv version should return the specified python version
+  'sudo -Hiu {{.Env.node_user}} {{ .Env.nodenv_executable }} version':
+    exit-status: 0
+    stdout:
+      - "{{.Env.node_version}}"

@@ -1,0 +1,28 @@
+---
+- name: setup
+  hosts: localhost
+  vars:
+    container_user: vagrant
+  tasks:
+    - name: create user
+      user: name={{ container_user }} comment="Container User" shell=/bin/bash state=present
+
+- name: build
+  hosts: localhost
+  roles:
+    - role: node-dev
+      node_user: vagrant
+      node_version: "6.11.2"
+
+- name: test
+  hosts: localhost
+  vars: {}
+  roles:
+    - role: degoss
+      degoss_no_clean: true
+      goss_file: goss.yml
+      goss_addtl_dirs: [goss.d/]
+      goss_env_vars:
+        node_user: vagrant
+        node_version: "6.11.2"
+        nodenv_executable: /home/vagrant/.nodenv/bin/nodenv

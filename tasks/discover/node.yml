@@ -1,0 +1,52 @@
+---
+- name: get node user details
+  command: getent passwd {{ node_user }}
+  become: true
+  become_user: "{{ node_user }}"
+  changed_when: false
+  register: node_user_check
+
+- name: set node user home
+  set_fact:
+    node_user_home: "{{ node_user_check.stdout_lines[0].split(':')[5] }}"
+    node_user_shell: "{{ node_user_check.stdout_lines[0].split(':')[6] }}"
+
+- name: set nodenv facts
+  set_fact:
+    nodenv_executable: "{{ node_user_home }}/.nodenv/bin/nodenv"
+    nodenv_root: "{{ node_user_home }}/.nodenv"
+
+# detect whether nodenv is installed
+- name: detect nodenv installation status
+  command: ls "{{ node_user_home }}/.nodenv"
+  register: nodenv_check
+  changed_when: false
+  failed_when: false
+
+# detect the version of node installed
+- name: detect if node installed
+  command: ls "{{ node_user_home }}/.nodenv/versions/{{ node_version }}"
+  register: node_version_installed
+  become: true
+  become_user: "{{ node_user }}"
+  changed_when: false
+  failed_when: false
+
+- name: get node version
+  shell: "{{ nodenv_executable }} version"
+  register: node_version_check
+  become: true
+  become_user: "{{ node_user }}"
+  become_method: sudo
+  become_flags: -Hi
+  changed_when: false
+  failed_when: false
+
+- name: set facts
+  set_fact:
+    nodenv_installed: "{{ nodenv_check.rc == 0 | bool }}"
+    node_installed: "{{ node_version_installed.rc == 0 | bool }}"
+    node_detected_version: "{{ '' if node_version_check.rc > 0 else node_version_check.stdout.strip() }}"
+
+- name: detect whether correct version of node
+  set_fact: node_version_changed="{{ not node_detected_version.startswith(node_version) }}"

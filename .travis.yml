@@ -1,0 +1,28 @@
+---
+dist: trusty
+sudo: required
+
+language: python
+python: "3.5"
+
+matrix:
+  fast_finish: true
+
+services:
+  - docker
+
+env:
+  global: # applied to every run
+    ROLE_NAME: node-dev
+
+  matrix: # each entry is its own run
+    - IMAGE_NAME: naftulikay/centos-vm:7
+    - IMAGE_NAME: naftulikay/xenial-vm:latest
+    - IMAGE_NAME: naftulikay/trusty-vm:latest
+
+install: pip install -r requirements.txt
+script: travis-pls make test-clean
+
+notifications:
+  email: { on_success: never, on_failure: never }
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

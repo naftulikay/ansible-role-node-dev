@@ -1,0 +1,13 @@
+---
+file:
+  '/etc/profile.d/nodenv.sh':
+    exists: true
+    contains:
+      # check for pyenv root being set
+      - /export NODENV_ROOT=\"\$HOME/\.nodenv\"/
+      # check for path modifications
+      - /export PATH=\"\$NODENV_ROOT/bin\:\$PATH\"/
+      # check for init
+      - /\$\(nodenv init \-\)/
+  '/home/{{.Env.nodenv_user}}/.nodenv':
+    exists: true

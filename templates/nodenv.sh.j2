@@ -1,0 +1,10 @@
+# setup nodenv variables
+export NODENV_ROOT="$HOME/.nodenv"
+
+# add nodenv and friends to the path
+export PATH="$NODENV_ROOT/bin:$PATH"
+
+# initialize nodenv
+if which nodenv >/dev/null 2>&1 ; then
+  eval "$(nodenv init -)"
+fi

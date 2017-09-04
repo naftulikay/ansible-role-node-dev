@@ -1,0 +1,22 @@
+---
+- name: install node build dependencies
+  package: name={{ item }} state=present
+  with_items: "{{ node_build_packages }}"
+  become: true
+
+- name: install the given node version
+  command: "{{ nodenv_executable }} install {{ item }}"
+  become: true
+  become_user: "{{ node_user }}"
+  register: node_install_result
+  with_items:
+    - "{{ node_version }}"
+  when: (not node_installed)
+
+- name: set the node version in nodenv
+  command: "{{ nodenv_executable }} local {{ node_version }}"
+  become: true
+  become_user: "{{ node_user }}"
+  become_method: sudo
+  become_flags: -Hi
+  when: node_version_changed or node_install_result|changed
