@@ -5,11 +5,11 @@
 
 # set facts to reliably determine os
 - name: discover operating system
-  include: discover/os.yml
+  include_tasks: discover/os.yml
 
 # set facts to reliably determine node variables
 - name: discover node
-  include: discover/node.yml
+  include_tasks: discover/node.yml
 
 # load per-os and per distro variables
 - name: load variables
@@ -32,8 +32,8 @@
 
 # install nodenv
 - name: install nodenv
-  include: nodenv.yml
+  include_tasks: nodenv.yml
 
 # install node
 - name: install node
-  include: node.yml
+  include_tasks: node.yml
