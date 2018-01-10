@@ -9,5 +9,5 @@ file:
       - /export PATH=\"\$NODENV_ROOT/bin\:\$PATH\"/
       # check for init
       - /\$\(nodenv init \-\)/
-  '/home/{{.Env.nodenv_user}}/.nodenv':
+  '/home/{{.Env.node_user}}/.nodenv':
     exists: true
