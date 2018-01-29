@@ -14,7 +14,7 @@
   when: (not node_installed)
 
 - name: set the node version in nodenv
-  command: "{{ nodenv_executable }} local {{ node_version }}"
+  command: "{{ nodenv_executable }} global {{ node_version }}"
   become: true
   become_user: "{{ node_user }}"
   become_method: sudo

@@ -11,3 +11,8 @@ file:
       - /\$\(nodenv init \-\)/
   '/home/{{.Env.node_user}}/.nodenv':
     exists: true
+
+  '/home/{{.Env.node_user}}/.nodenv/version':
+    exists: true
+    contains:
+      - "{{.Env.node_version}}"
