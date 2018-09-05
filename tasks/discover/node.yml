@@ -13,8 +13,10 @@
 
 - name: set nodenv facts
   set_fact:
+    node_executable: "{{ node_user_home }}/.nodenv/shims/node"
     nodenv_executable: "{{ node_user_home }}/.nodenv/bin/nodenv"
     nodenv_root: "{{ node_user_home }}/.nodenv"
+    npm_executable: "{{ node_user_home }}/.nodenv/shims/npm"
 
 # detect whether nodenv is installed
 - name: detect nodenv installation status

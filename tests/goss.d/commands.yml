@@ -5,3 +5,7 @@ command:
     exit-status: 0
     stdout:
       - "{{.Env.node_version}}"
+
+  # test that neovim was installed
+  'sudo -Hiu {{.Env.node_user}} {{ .Env.npm_executable }} list -g | grep -qP "neovim"':
+    exit-status: 0
