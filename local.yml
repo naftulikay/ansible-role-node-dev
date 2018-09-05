@@ -1,0 +1,20 @@
+---
+- name: determine local user name
+  hosts: all
+  connection: local
+  tasks:
+    - name: detect local user
+      local_action: command whoami
+      changed_when: false
+      register: host_user
+
+    - name: set local user fact
+      set_fact: local_user={{ host_user.stdout }}
+
+- name: apply config locally
+  hosts: all
+  connection: local
+  roles:
+    - role: node-dev
+      node_user: "{{ local_user }}"
+      node_version: 8.11.4

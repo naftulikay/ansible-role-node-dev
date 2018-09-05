@@ -10,7 +10,7 @@
 - name: build
   hosts: localhost
   roles:
-    - role: node-dev
+    - role: default
       node_user: vagrant
       node_version: "6.11.2"
 
