@@ -1,5 +1,3 @@
 ---
 node_version: "6.11.2"
-addtl_node_system_packages: []
-addtl_node_gem_system_packages: []
-addtl_node_gem_user_packages: []
+addtl_npm_packages: []

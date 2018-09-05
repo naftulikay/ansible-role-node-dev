@@ -19,4 +19,13 @@
   become_user: "{{ node_user }}"
   become_method: sudo
   become_flags: -Hi
-  when: node_version_changed or node_install_result|changed
+  when: node_version_changed or node_install_result is changed
+
+- name: install global npm packages
+  npm:
+    name: "{{ item }}"
+    state: present
+    executable: "{{ npm_executable }}"
+    global: true
+  become: true
+  with_items: "{{ addtl_npm_packages }}"

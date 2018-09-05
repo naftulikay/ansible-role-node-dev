@@ -12,7 +12,8 @@
   roles:
     - role: default
       node_user: vagrant
-      node_version: "6.11.2"
+      node_version: "8.11.4"
+      addtl_npm_packages: [neovim]
 
 - name: test
   hosts: localhost
@@ -25,5 +26,6 @@
       goss_addtl_dirs: [goss.d]
       goss_env_vars:
         node_user: vagrant
-        node_version: "6.11.2"
+        node_version: "8.11.4"
         nodenv_executable: /home/vagrant/.nodenv/bin/nodenv
+        npm_executable: /home/vagrant/.nodenv/shims/npm

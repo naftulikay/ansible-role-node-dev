@@ -18,3 +18,5 @@
     - role: node-dev
       node_user: "{{ local_user }}"
       node_version: 8.11.4
+      addtl_npm_packages:
+        - neovim
