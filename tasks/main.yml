@@ -3,26 +3,23 @@
   fail: msg="The node_user variable must be set."
   when: (node_user is not defined) or (not node_user)
 
-# set facts to reliably determine os
-- name: discover operating system
-  include_tasks: discover/os.yml
-
 # set facts to reliably determine node variables
 - name: discover node
   include_tasks: discover/node.yml
 
 # load per-os and per distro variables
-- name: load variables
-  include_vars: "{{ var_loop_item }}"
-  with_items:
-    - "{{ os_name }}/common.yml"
-    - "{{ os_name }}/{{ os_release }}.yml"
-  loop_control: { loop_var: var_loop_item }
+- name: load ubuntu variables
+  include_vars: ubuntu.yml
+  when: is_ubuntu_derivative
 
-# refresh cache on ubuntu
+- name: load redhat variables
+  include_vars: redhat.yml
+  when: is_redhat_derivative
+
+  # refresh cache on ubuntu
 - name: refresh apt cache
   apt: update_cache=yes cache_valid_time=3600
-  when: os_name == "ubuntu"
+  when: is_ubuntu_derivative
   become: true
 
 # install build dependencies

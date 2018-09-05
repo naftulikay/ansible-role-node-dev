@@ -1,3 +1,4 @@
 ---
 - name: degoss
   src: naftulikay.degoss
+- name: naftulikay.base
